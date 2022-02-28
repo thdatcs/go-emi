@@ -40,9 +40,9 @@ func main() {
 	fmt.Println(fmt.Sprintf("Interest Rate: %.2f", interestRate))
 	fmt.Println(fmt.Sprintf("Portion Amount: %.2f", portionAmount))
 	fmt.Println()
-	fmt.Println("No.\tEffective Date\tDue Date\tPortion Interest\tPortion Loan Amount\tRemaining Loan Amount")
+	fmt.Println("No.\tEffective Date\tDue Date\tPortion Amount\tPortion Interest\tPortion Loan Amount\tRemaining Loan Amount")
 	for i := 0; i < len(detailPlans); i++ {
-		fmt.Println(fmt.Sprintf("%d\t%s\t%s\t%s\t\t%s\t\t%s", i+1, detailPlans[i]["Effective Date"], detailPlans[i]["Due Date"], detailPlans[i]["Portion Interest Amount"], detailPlans[i]["Portion Loan Amount"], detailPlans[i]["Remaining Loan Amount"]))
+		fmt.Println(fmt.Sprintf("%d\t%s\t%s\t%s\t%s\t\t%s\t\t%s", i+1, detailPlans[i]["Effective Date"], detailPlans[i]["Due Date"], detailPlans[i]["Portion Amount"], detailPlans[i]["Portion Interest Amount"], detailPlans[i]["Portion Loan Amount"], detailPlans[i]["Remaining Loan Amount"]))
 
 	}
 }
@@ -97,6 +97,7 @@ func calculateDetailPlans(loanAmount, interestRate float64, loanTenure int, firs
 		var detailPlan = make(map[string]string)
 		detailPlan["Effective Date"] = effectiveDate.Format("2006-01-02")
 		detailPlan["Due Date"] = dueDate.Format("2006-01-02")
+		detailPlan["Portion Amount"] = fmt.Sprintf("%.2f", portionInterestAmount+math.Min(portionAmount-portionInterestAmount, prevRemainingLoanAmount))
 		detailPlan["Portion Interest Amount"] = fmt.Sprintf("%.2f", portionInterestAmount)
 		detailPlan["Portion Loan Amount"] = fmt.Sprintf("%.2f", math.Min(portionAmount-portionInterestAmount, prevRemainingLoanAmount))
 		detailPlan["Remaining Loan Amount"] = fmt.Sprintf("%.2f", math.Max(0, remainingLoanAmount))
