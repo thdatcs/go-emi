@@ -99,7 +99,11 @@ func calculateDetailPlans(loanAmount, interestRate float64, loanTenure int, firs
 		detailPlan["Due Date"] = dueDate.Format("2006-01-02")
 		detailPlan["Portion Amount"] = fmt.Sprintf("%.2f", portionInterestAmount+math.Min(portionAmount-portionInterestAmount, prevRemainingLoanAmount))
 		detailPlan["Portion Interest Amount"] = fmt.Sprintf("%.2f", portionInterestAmount)
-		detailPlan["Portion Loan Amount"] = fmt.Sprintf("%.2f", math.Min(portionAmount-portionInterestAmount, prevRemainingLoanAmount))
+		if i == loanTenure-1 {
+			detailPlan["Portion Loan Amount"] = fmt.Sprintf("%.2f", prevRemainingLoanAmount)
+		} else {
+			detailPlan["Portion Loan Amount"] = fmt.Sprintf("%.2f", portionAmount-portionInterestAmount)
+		}
 		detailPlan["Remaining Loan Amount"] = fmt.Sprintf("%.2f", math.Max(0, remainingLoanAmount))
 		detailPlans = append(detailPlans, detailPlan)
 	}
